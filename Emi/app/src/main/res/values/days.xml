@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="s1">
+        <item>60</item>
+        <item>90</item>
+        <item>60</item>
+        <item>90</item>
+        <item>60</item>
+        <item>90</item>
+        <item>60</item>
+        <item>90</item>
+        <item>60</item>
+        <item>90</item>
+        <item>60</item>
+        <item>90</item>
+        <item>60</item>
+        <item>90</item>
+        <item>60</item>
+        <item>90</item>
+    </integer-array>
+    <integer-array name="s2">
+        <item>90</item>
+        <item>120</item>
+        <item>90</item>
+        <item>120</item>
+        <item>90</item>
+        <item>120</item>
+        <item>90</item>
+        <item>120</item>
+        <item>90</item>
+        <item>120</item>
+        <item>90</item>
+        <item>120</item>
+    </integer-array>
+    <integer-array name="s3">
+        <item>90</item>
+        <item>90</item>
+        <item>180</item>
+        <item>180</item>
+        <item>90</item>
+        <item>90</item>
+        <item>180</item>
+        <item>180</item>
+    </integer-array>
+    <integer-array name="s4">
+        <item>180</item>
+        <item>90</item>
+        <item>300</item>
+        <item>150</item>
+        <item>180</item>
+        <item>90</item>
+        <item>300</item>
+    </integer-array>
+    <integer-array name="s5">
+        <item>300</item>
+        <item>180</item>
+        <item>300</item>
+        <item>180</item>
+        <item>300</item>
+    </integer-array>
+    <integer-array name="s6">
+        <item>480</item>
+        <item>300</item>
+        <item>480</item>
+    </integer-array>
+    <integer-array name="s7">
+        <item>1260</item>
+    </integer-array>
+    <integer-array name="s8">
+        <item>300</item>
+        <item>180</item>
+        <item>480</item>
+        <item>180</item>
+        <item>300</item>
+    </integer-array>
+    <integer-array name="s9">
+        <item>600</item>
+        <item>180</item>
+        <item>600</item>
+    </integer-array>
+    <integer-array name="s10">
+        <item>1500</item>
+    </integer-array>
+    <integer-array name="s11">
+        <item>1680</item>
+    </integer-array>
+    <integer-array name="s12">
+        <item>1800</item>
+    </integer-array>
+</resources>

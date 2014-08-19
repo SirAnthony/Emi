@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="w1">
+        <item>@array/s1</item>
+        <item>@array/s1</item>
+        <item>@array/s1</item>
+    </array>
+    <array name="w2">
+        <item>@array/s2</item>
+        <item>@array/s2</item>
+        <item>@array/s2</item>
+    </array>
+    <array name="w3">
+        <item>@array/s3</item>
+        <item>@array/s3</item>
+        <item>@array/s3</item>
+    </array>
+    <array name="w4">
+        <item>@array/s4</item>
+        <item>@array/s4</item>
+        <item>@array/s4</item>
+    </array>
+    <array name="w5">
+        <item>@array/s5</item>
+        <item>@array/s6</item>
+        <item>@array/s7</item>
+    </array>
+    <array name="w6">
+        <item>@array/s8</item>
+        <item>@array/s9</item>
+        <item>@array/s10</item>
+    </array>
+    <array name="w7">
+        <item>@array/s10</item>
+        <item>@array/s10</item>
+        <item>@array/s11</item>
+    </array>
+    <array name="w8">
+        <item>@array/s11</item>
+        <item>@array/s11</item>
+        <item>@array/s12</item>
+    </array>
+    <array name="w9">
+        <item>@array/s12</item>
+        <item>@array/s12</item>
+        <item>@array/s12</item>
+    </array>
+</resources>
