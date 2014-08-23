@@ -1,10 +1,10 @@
-package org.aurigone.emi;
+package org.aurigone.emi.CrossLib;
 
-public class CrossItem {
-    protected ACTION_TYPE type;
-    protected int length;
+public class Item {
+    protected final ACTION_TYPE type;
+    protected final int length;
 
-    CrossItem(ACTION_TYPE t, int l){
+    Item(ACTION_TYPE t, int l){
         type = t;
         length = l;
     }

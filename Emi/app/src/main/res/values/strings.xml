@@ -7,5 +7,6 @@
     <string name="start_button">Start</string>
     <string name="greetings">Hello</string>
     <string name="title_activity_cross">Cross</string>
+    <string name="time_placeholder">00:00</string>
 
 </resources>

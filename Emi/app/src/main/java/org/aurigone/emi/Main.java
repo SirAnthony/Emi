@@ -1,16 +1,23 @@
 package org.aurigone.emi;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+
+import org.aurigone.emi.CrossLib.State;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class Main extends ActionBarActivity {
+
+    protected State state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +45,36 @@ public class Main extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public State createConfig(){
+        State s = new State("default_cross.json", 0);
+        try {
+            FileOutputStream stream = openFileOutput("state.json", 0);
+            s.save(stream);
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+
+    public void loadState(){
+        try {
+            FileInputStream stream = openFileInput("state.json");
+            state = new State(stream);
+            stream.close();
+        } catch (FileNotFoundException e) {
+            state = createConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void startCross(View v){
         Intent intent = new Intent(this, Cross.class);
-        // intent.putExtra();
+        if (state == null) {
+            loadState();
+        }
+        intent.putExtra("STATE", state);
         startActivity(intent);
     }
 

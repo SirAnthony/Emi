@@ -1,39 +1,56 @@
 package org.aurigone.emi;
 
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
-import org.aurigone.emi.R;
+import org.aurigone.emi.CrossLib.ClockTextView;
+import org.aurigone.emi.CrossLib.Item;
+import org.aurigone.emi.CrossLib.Schedule;
+import org.aurigone.emi.CrossLib.State;
+import org.aurigone.emi.CrossLib.Task;
 
-public class Cross extends ActionBarActivity {
+import java.util.Iterator;
 
-    protected CrossTask currentTask;
 
-    protected void load() {
-        Resources res = getResources();
-        TypedArray week = res.obtainTypedArray(R.array.w1);
-        currentTask = new CrossTask(res.getIntArray(week.peekValue(0).resourceId));
+public class Cross extends Activity implements ClockTextView.ActionSwitcher {
+
+    private ClockTextView chronometer;
+    private Iterator<Item> taskIter;
+
+    void load(State st) {
+        Schedule sc = new Schedule(st.getSchedule());
+        Task currentTask = sc.getTask(st.getTask());
+        taskIter = currentTask.getItemsIter();
+        switchAction();
+    }
+
+    @Override
+    public void switchAction() {
+        if (!taskIter.hasNext()) {
+            return;
+        }
+        Item action = taskIter.next();
+        chronometer.setItem(action);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        State state;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cross);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+        setContentView(R.layout.fragment_cross);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.fragment_cross, null);
+        chronometer = (ClockTextView ) view.findViewById(R.id.TimeLeft);
+        chronometer.setListener(this);
+        Bundle extras = getIntent().getExtras();
+        state = (State) extras.get("STATE");
+        this.load(state);
     }
 
 
@@ -54,21 +71,5 @@ public class Cross extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_cross, container, false);
-            return rootView;
-        }
     }
 }
