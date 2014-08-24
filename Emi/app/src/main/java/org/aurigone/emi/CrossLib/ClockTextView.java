@@ -1,35 +1,45 @@
 package org.aurigone.emi.CrossLib;
 
 import android.content.Context;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by anthony on 24.08.14.
  */
 public class ClockTextView extends TextView {
-
-    private int countdown = 0;
-
+    final long interval = 1000;
     private ActionSwitcher listener;
-    private final Timer timer = new Timer();
+    private ChronoTimer timer;
 
     public ClockTextView(Context c) { super(c); }
     public ClockTextView(Context c, AttributeSet as) { super(c, as); }
     public ClockTextView(Context c, AttributeSet as, int d) { super(c, as, d); }
 
     public interface ActionSwitcher {
-        public void switchAction();
+        public void actionFinished();
+        public void updateTime(String s);
     }
 
-    private class DefaultTask extends TimerTask {
+    private class ChronoTimer extends CountDownTimer {
+
+        ChronoTimer(long t, long i) { super(t, i); }
+
         @Override
-        public void run(){
-            updateText();
-            countdown--;
+        public void onFinish() {
+            updateText(0);
+            listener.actionFinished();
+        }
+
+        @Override
+        public void onTick(long timeLeft) {
+            updateText(timeLeft);
         }
     }
 
@@ -38,22 +48,15 @@ public class ClockTextView extends TextView {
     }
 
     public void setItem(Item item){
-        this.countdown = item.getLength();
-        timer.schedule(new DefaultTask(), 1);
+        long total = (item.getLength() + 1) * interval;
+        timer = new ChronoTimer(total, interval);
+        updateText(total);
+        timer.start();
     }
 
-    void stop(){
-        timer.cancel();
-        timer.purge();
-        listener.switchAction();
+    void updateText(long timeLeft){
+        long time = timeLeft / interval;
+        String stime = String.format("%02d:%02d", time / 60, time % 60);
+        listener.updateTime(stime);
     }
-
-    void updateText(){
-        if (countdown < 0){
-            stop();
-        } else {
-            setText(String.format("%02d:%02d", countdown / 60, countdown % 60));
-        }
-    }
-
 }

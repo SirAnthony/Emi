@@ -8,23 +8,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
  * Created by anthony on 23.08.14.
  */
 public class Schedule extends JSONReader {
-    protected static AssetManager assets;
-    protected ArrayList<Task> tasks;
+    protected ArrayList<TaskGroup> tasks = new ArrayList<TaskGroup>();
     protected String name;
 
-    public Schedule(String filename){
+    public Schedule(String name, InputStream stream){
         JSONObject schedule;
         JSONObject timings;
         JSONArray array;
-        name = filename;
+        this.name = name;
         try {
-            schedule = getJsonObject(assets.open(filename));
+            schedule = getJsonObject(stream);
             timings = schedule.getJSONObject("timings");
             array = schedule.getJSONArray("schedule");
         } catch (IOException e) {
@@ -34,12 +34,26 @@ public class Schedule extends JSONReader {
             e.printStackTrace();
             return;
         }
-        JSONArray sh;
-        for (int n = 0; n < array.length(); ++n) {
-            String name;
+        for (int g = 0; g < array.length(); ++g) {
             try {
-                name = array.getString(n);
-                sh = timings.getJSONArray(name);
+                JSONArray arr = array.getJSONArray(g);
+                TaskGroup group = new TaskGroup(createGroup(arr, timings));
+                tasks.add(group);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+    }
+
+    private ArrayList<Task> createGroup(JSONArray array, JSONObject timings){
+        JSONArray sh;
+        ArrayList<Task> group = new ArrayList<Task>();
+        for (int n = 0; n < array.length(); ++n) {
+
+            try {
+                String timing = array.getString(n);
+                sh = timings.getJSONArray(timing);
             } catch (JSONException e) {
                 e.printStackTrace();
                 continue;
@@ -52,8 +66,9 @@ public class Schedule extends JSONReader {
                     e.printStackTrace();
                 }
             }
-            tasks.add(new Task(name, t));
+            group.add(new Task(t));
         }
+        return group;
     }
 
     public String getName(){
@@ -64,7 +79,7 @@ public class Schedule extends JSONReader {
         return tasks.size();
     }
 
-    public Task getTask(int index){
-        return tasks.get(index);
+    public Task getTask(int subgrop, int index){
+        return tasks.get(subgrop).getTask(index);
     }
 }

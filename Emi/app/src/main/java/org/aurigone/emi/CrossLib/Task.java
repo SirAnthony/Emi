@@ -5,19 +5,14 @@ import java.util.Iterator;
 
 public class Task {
 
-    protected String name;
-    protected ArrayList<Item> items;
+    protected ArrayList<Item> items = new ArrayList<Item>();
 
-    public Task(String n, int[] resources){
-        name = n;
+    public Task(int[] resources){
         for (int i = 0; i < resources.length; i++) {
             int t = i % ACTION_TYPE.TYPES_COUNT.ordinal();
-            items.add(new Item(ACTION_TYPE.values()[t], resources[i]));
+            Item item = new Item(ACTION_TYPE.values()[t], resources[i]);
+            items.add(item);
         }
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Iterator<Item> getItemsIter() {

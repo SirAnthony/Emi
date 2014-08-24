@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class Main extends ActionBarActivity {
 
-    protected State state;
+    protected State state = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class Main extends ActionBarActivity {
     }
 
     public State createConfig(){
-        State s = new State("default_cross.json", 0);
+        State s = new State("default_cross.json", 0, 0);
         try {
             FileOutputStream stream = openFileOutput("state.json", 0);
             s.save(stream);
